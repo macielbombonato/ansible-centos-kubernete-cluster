@@ -7,9 +7,9 @@ Os scripts foram copiados e baseados no   [artigo](https://www.digitalocean.com/
 ## Requisitos:
 
 1. Instale o ansible em sua máquina
-2. Crie as máquias CentOS 
+2. Crie as máquias CentOS
 3. Ajuste o arquivo hosts para ficar adequado ao seu ambiente
-4. Após criar as chaves SSH (```ssh-keygen```) em todas as máquinas, execute em seu computador o seguinte comando:
+4. Após criar as chaves SSH (```ssh-keygen```) em todas as máquinas, execute em seu computador o seguinte comando para cada uma das máquinas que constam no arquivo **hosts**:
 
 ```
 ssh-copy-id root@your_host_ip
