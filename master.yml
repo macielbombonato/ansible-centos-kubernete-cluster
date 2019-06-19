@@ -4,7 +4,7 @@
     - name: initialize the cluster
       become: yes
       become_user: ${USER}
-      shell: kubeadm init --pod-network-cidr=10.75.0.0/16 --apiserver-advertise-address 10.75.94.101 >> cluster_initialized.txt
+      shell: kubeadm init --pod-network-cidr=${NETWORK} --apiserver-advertise-address ${MASTER_IP} >> cluster_initialized.txt
       args:
         chdir: $HOME
         creates: cluster_initialized.txt

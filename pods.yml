@@ -5,7 +5,7 @@
       shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
 
     - name: initialize proxy --> change this settings. this example is only for educational purposes.
-      shell: kubectl proxy --address='0.0.0.0' --port='8001' --accepted-hosts='*'
+      shell: kubectl proxy --address=${PROXY_HOST} --port=${PROXY_PORT} --accepted-hosts=${ACCEPTED_HOSTS}
 
    - name: install git
      yum:
