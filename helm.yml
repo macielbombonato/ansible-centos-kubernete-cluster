@@ -1,7 +1,6 @@
 - hosts: master
   become: yes
   tasks:
-
     - name: Ensure EPEL is enabled
       yum:
         name: epel-release

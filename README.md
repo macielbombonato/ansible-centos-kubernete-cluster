@@ -37,9 +37,7 @@ ssh-copy-id root@your_host_ip
 
 ## Antes de executar
 
-Atualize o arquivo **run-playbook.sh** atualizando as variáveis de ambiente que estão no início do arquivo. Essas variáveis devem refletir a configuração do seu ambiente.
-
-Outro arquivo que deve ser atualizado é o **hosts**, nele é necessário atualizar o usuário de acesso SSH e IP das máquinas.
+Atualize o arquivo **hosts.yml** atualizando endereços de IP e variáveis de ambiente listadas no arquivo.
 
 ## Como usar
 
