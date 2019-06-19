@@ -1,16 +1,16 @@
 - hosts: all
   become: yes
   tasks:
-    - name: create the ${USER} user
-      user: name=${USER} append=yes state=present createhome=yes shell=/bin/bash
+    - name: create the {{USER}} user
+      user: name={{USER}} append=yes state=present createhome=yes shell=/bin/bash
 
-    - name: allow ${USER} to have passwordless sudo
+    - name: allow {{USER}} to have passwordless sudo
       lineinfile:
         dest: /etc/sudoers
-        line: "${USER} ALL=(ALL) NOPASSWD: ALL"
+        line: "{{USER}} ALL=(ALL) NOPASSWD: ALL"
         validate: 'visudo -cf %s'
 
     - name: set up authorized keys for the centos user
-      authorized_key: user=${USER} key="{{item}}"
+      authorized_key: user={{USER}} key="{{item}}"
       with_file:
         - ~/.ssh/id_rsa.pub
