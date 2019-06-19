@@ -1,6 +1,12 @@
 - hosts: all
   become: yes
   tasks:
+   - name: install git
+     yum:
+       name: git
+       state: present
+       update_cache: true
+       
    - name: install Docker
      yum:
        name: docker
