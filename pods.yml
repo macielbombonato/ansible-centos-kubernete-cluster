@@ -14,14 +14,14 @@
 
     - name: download ingress 
       become: yes
-      become_user: centos
+      become_user: ${USER}
       shell: git clone https://github.com/nginxinc/kubernetes-ingress.git
       args:
         chdir: $HOME
         
     - name: install ingress 
       become: yes
-      become_user: centos
+      become_user: ${USER}
       shell: make
       args:
         chdir: $HOME/kubernetes-ingress

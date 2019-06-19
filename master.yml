@@ -2,6 +2,8 @@
   become: yes
   tasks:
     - name: initialize the cluster
+      become: yes
+      become_user: ${USER}
       shell: kubeadm init --pod-network-cidr=10.75.0.0/16 --apiserver-advertise-address 10.75.94.101 >> cluster_initialized.txt
       args:
         chdir: $HOME
@@ -9,23 +11,42 @@
 
     - name: create .kube directory
       become: yes
-      become_user: centos
+      become_user: ${USER}
       file:
         path: $HOME/.kube
         state: directory
         mode: 0755
 
     - name: copy admin.conf to user's kube config
+      become: yes
+      become_user: ${USER}
       copy:
         src: /etc/kubernetes/admin.conf
-        dest: /home/centos/.kube/config
+        dest: ${HOME}/.kube/config
         remote_src: yes
-        owner: centos
+        owner: ${USER}
 
     - name: install Pod network
       become: yes
-      become_user: centos
+      become_user: ${USER}
       shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml >> pod_network_setup.txt
       args:
         chdir: $HOME
         creates: pod_network_setup.txt
+
+    - name: create .kube directory for root
+      become: yes
+      become_user: root
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: 0755
+
+    - name: copy admin.conf to user's kube config for root
+      become: yes
+      become_user: root
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: $HOME/.kube/config
+        remote_src: yes
+        owner: root

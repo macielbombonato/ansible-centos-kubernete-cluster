@@ -1,0 +1,102 @@
+- hosts: master
+  become: yes
+  tasks:
+
+    - name: Ensure EPEL is enabled
+      yum:
+        name: epel-release
+        state: present
+      become: True
+
+    - name: Ensure Pip and dev dependencies are installed.
+      package:
+        name:
+          - gcc
+#          - libgit2-devel-0.26.8
+          - python-devel
+          - python-pip
+        state: present
+      become: True
+
+    - name: force upgrade of pip itself.
+      pip:
+        name: pip
+        state: latest
+      become: True
+
+    - name: Ensure pygit2 is installed.
+      pip:
+        name:
+          - pygit2==0.26
+        state: present
+
+    - name: Ensure pyhelm is installed.
+      pip:
+        name:
+          - pyhelm
+        extra_args: --ignore-installed requests
+        state: present
+
+    - name: Install older version of requests for pyhelm
+      pip:
+        name:
+          - requests==2.14.2
+        state: present
+
+    - name: Ensure pyhelm is installed.
+      pip:
+        name:
+          - pyhelm
+        state: present
+
+    - name: Install helm chart
+      helm:
+        host: localhost
+        chart:
+          name: memcached
+          version: 0.4.0
+          source:
+            type: repo
+            location: https://kubernetes-charts.storage.googleapis.com
+        state: present
+        name: my-memcached
+        namespace: default
+
+
+    - name: Install helm chart
+      helm:
+        chart:
+          name: memcached
+          version: 0.4.0
+          source:
+            type: repo
+            location: https://kubernetes-charts.storage.googleapis.com
+        state: present
+        name: my-memcached
+        namespace: default
+
+    - name: Uninstall helm chart
+      helm:
+        state: absent
+        name: my-memcached
+
+    - name: Install helm chart from a git repo
+      helm:
+        chart:
+          source:
+            type: git
+            location: https://github.com/user/helm-chart.git
+        state: present
+        name: my-example
+        namespace: default
+
+    - name: Install helm chart from a git repo specifying path
+      helm:
+        chart:
+          source:
+            type: git
+            location: https://github.com/helm/charts.git
+            path: stable/memcached
+        state: present
+        name: my-memcached
+        namespace: default
