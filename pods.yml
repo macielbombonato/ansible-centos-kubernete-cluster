@@ -7,11 +7,6 @@
     - name: initialize proxy --> change this settings. this example is only for educational purposes.
       shell: kubectl proxy --address={{PROXY_HOST}} --port={{PROXY_PORT}} --accepted-hosts={{ACCEPTED_HOSTS}}
 
-   - name: install git
-     yum:
-        name: git
-        state: present
-
     - name: download ingress 
       become: yes
       become_user: {{USER}}
