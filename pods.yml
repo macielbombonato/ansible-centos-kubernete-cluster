@@ -7,16 +7,16 @@
     - name: initialize proxy --> change this settings. this example is only for educational purposes.
       shell: kubectl proxy --address={{PROXY_HOST}} --port={{PROXY_PORT}} --accepted-hosts={{ACCEPTED_HOSTS}}
 
-    - name: download ingress 
+    - name: download ingress
       become: yes
-      become_user: {{USER}}
+      become_user: ${USER}
       shell: git clone https://github.com/nginxinc/kubernetes-ingress.git
       args:
         chdir: $HOME
-        
-    - name: install ingress 
+
+    - name: install ingress
       become: yes
-      become_user: {{USER}}
+      become_user: ${USER}
       shell: make
       args:
         chdir: $HOME/kubernetes-ingress

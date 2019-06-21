@@ -6,7 +6,7 @@
        name: git
        state: present
        update_cache: true
-       
+
    - name: install Docker
      yum:
        name: docker
@@ -18,12 +18,12 @@
        name: docker
        state: started
 
-   - name: disable SELinux
-     command: setenforce 0
+#   - name: disable SELinux
+#     command: setenforce 0
 
-   - name: disable SELinux on reboot
-     selinux:
-       state: disabled
+#   - name: disable SELinux on reboot
+#     selinux:
+#       state: disabled
 
    - name: stop firewalld
      command: systemctl stop firewalld
@@ -67,6 +67,9 @@
        name: kubelet
        enabled: yes
        state: started
+
+#   - name: restart
+#     command: shutdown -r
 
 - hosts: master
   become: yes

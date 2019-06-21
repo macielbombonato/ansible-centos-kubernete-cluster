@@ -2,16 +2,11 @@
   become: yes
   tasks:
     - name: initialize the cluster
-      become: yes
-      become_user: {{USER}}
       shell: kubeadm init --pod-network-cidr={{NETWORK}} --apiserver-advertise-address {{MASTER_IP}} >> cluster_initialized.txt
-      args:
-        chdir: $HOME
-        creates: cluster_initialized.txt
 
     - name: create .kube directory
       become: yes
-      become_user: {{USER}}
+      become_user: ${USER}
       file:
         path: $HOME/.kube
         state: directory
@@ -19,16 +14,16 @@
 
     - name: copy admin.conf to user's kube config
       become: yes
-      become_user: {{USER}}
+      become_user: ${USER}
       copy:
         src: /etc/kubernetes/admin.conf
         dest: ${HOME}/.kube/config
         remote_src: yes
-        owner: {{USER}}
+        owner: ${USER}
 
     - name: install Pod network
       become: yes
-      become_user: {{USER}}
+      become_user: ${USER}
       shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml >> pod_network_setup.txt
       args:
         chdir: $HOME
